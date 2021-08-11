@@ -1,13 +1,14 @@
 package test;
 
-public class GetterSetter {
+public class MsgVO {
 	String color, cheertext;
-
-	public GetterSetter(String color, String cheertext) {
+	
+	/*
+	public MsgVO(String color, String cheertext) {
 		super();
 		this.color = color;
 		this.cheertext = cheertext;
-	}
+	}*/  // 이 부분이 필요 없음.
 	
 	public String getColor() {
 		return color;

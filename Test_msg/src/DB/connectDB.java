@@ -21,8 +21,6 @@ public class connectDB {
 		 } catch(Exception e) {
 			System.out.println("드라이버 로딩 실패");
 		 }
-		
-		 
 			
 		 
 		 return con;

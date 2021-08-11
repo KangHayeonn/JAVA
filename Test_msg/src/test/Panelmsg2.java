@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 
 import DB.connectDB;
 import DB.drimstudyDB;
+
 
 
 public class Panelmsg2 extends JPanel {
@@ -249,17 +251,21 @@ public class Panelmsg2 extends JPanel {
 		 	String postCheer;
 		 	postCheer = (String) content.getText();
 		 	
-		 	/*
-		 	GetterSetter s = new GetterSetter(color, postCheer);
-		 	s.setColor(color);
-		 	s.setCheertext(postCheer);
-		 	drimstudyDB drimDB = new drimstudyDB();
-		 	*/
-		 	drimstudyDB s = new drimstudyDB();
-		 	s.sendDB(color, postCheer);
+		 	//MsgVO data = new MsgVO();
+		 	//data.setColor(color);
+		 	ArrayList<MsgVO> list = new ArrayList<MsgVO>(); // 게터세터를 받아줄 배열을 먼저 만들어줌
+		 	MsgVO data = new MsgVO(); // 해당 클래스를 호출
+		 	
+		 	data.setColor(color); // 해당 클래스에 데이터를 SET
+		 	data.setCheertext(postCheer); // 해당 클래스에 데이터를 SET
+		 	
+		 	list.add(data); // data를 list에 저장시켜줌
+		 	
+		 	drimstudyDB s = new drimstudyDB(); // DB함수를 호출
+		 	s.sendDB(data); // 해당 함수에 data를 보내줌
 		 	
 			// 임시 출력
-		 	System.out.println(s);
+		 	System.out.println(data.getColor() + data.getCheertext());
 			
 		 }
       });
