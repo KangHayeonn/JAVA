@@ -23,7 +23,7 @@ public class SeleniumTest {
 	
 	// Properties
 	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-	public static final String WEB_DRIVER_PATH = "C:\\Users\\Drimsys\\selenium/chromedriver.exe";
+	public static final String WEB_DRIVER_PATH = "C:\\Users\\user\\JavaTool/chromedriver.exe";
 	
 	// 크롤링 할 URL
 	private String base_url;
@@ -39,7 +39,7 @@ public class SeleniumTest {
         options.setCapability("ignoreProtectedModeSettings", true);
         driver = new ChromeDriver(options);
 		//driver = new ChromeDriver();
-		base_url = "https://www.daum.net";
+		base_url = "https://www.youtube.com/";
 		
 		// 창을 띄우지않고 작업하고 싶을때
         // ChromeOptions options = new ChromeOptions();
@@ -52,49 +52,60 @@ public class SeleniumTest {
 			// get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
 			driver.get(base_url);
 			
+			webElement = driver.findElement(By.cssSelector("#search"));
+			//webElement = driver.findElement(By.id("loginBtn"));
 			
-	
-            
-			//iframe으로 구성된 곳은 해당 프레임으로 전환시킨다.
-            //driver.switchTo().frame(driver.findElement(By.id("loginForm")));
-            
-            webElement = driver.findElement(By.xpath("//*[@id=\"inner_login\"]/a[1]"));
-            webElement.click();
-            
-          //*[@id="inner_login"]/a[1]
-            
-            //iframe 내부에서 id 필드 탐색
-            webElement = driver.findElement(By.id("id"));
-            Thread.sleep(500); 
-            String daum_id ="rkdgkdus522";
-            webElement.sendKeys(daum_id);
-            //#inner_login > a:nth-child(1)
-            
-            //iframe 내부에서 pw 필드 탐색
-            webElement = driver.findElement(By.id("inputPwd"));
-            Thread.sleep(500); 
-            String daum_pw ="sj7131513!";
-            webElement.sendKeys(daum_pw);
-            
- 
-            //로그인 버튼 클릭
-            /*
-            webElement = driver.findElement(By.id("loginBtn"));
-            webElement.submit();
-            
-            webElement = driver.findElement(By.xpath("//*[@id=\"afterBtn\"]"));
-            webElement.click();
-            
-            */
-            
-            webElement = driver.findElement(By.xpath("//*[@id=\"loginBtn\"]"));
+			Thread.sleep(500); 
+			String search ="올림픽 하이라이트 영상";
+            webElement.sendKeys(search);
+			Thread.sleep(500); 
+            webElement = driver.findElement(By.cssSelector("#search-icon-legacy"));
             webElement.click();
           
-         
-            Thread.sleep(500); 
+            WebElement webElement1 = driver.findElement(By.id("#video-title"));
+            if(webElement1 != null) {
+            	System.out.println(webElement1.getText());
+            }
+//			//iframe으로 구성된 곳은 해당 프레임으로 전환시킨다.
+//            //driver.switchTo().frame(driver.findElement(By.id("loginForm")));
+//            
+//            webElement = driver.findElement(By.xpath("//*[@id=\"inner_login\"]/a[1]"));
+//            webElement.click();
+//            
+//          #search_btn
+//            
+//            //iframe 내부에서 id 필드 탐색
+//            webElement = driver.findElement(By.id("id"));
+//            Thread.sleep(500); 
+//            String daum_id ="rkdgkdus522";
+//            webElement.sendKeys(daum_id);
+//            //#inner_login > a:nth-child(1)
+//            
+//            //iframe 내부에서 pw 필드 탐색
+//            webElement = driver.findElement(By.id("inputPwd"));
+//            Thread.sleep(500); 
+//            String daum_pw ="sj7131513!";
+//            webElement.sendKeys(daum_pw);
+//            
+// 
+//            //로그인 버튼 클릭
+//            /*
+//            webElement = driver.findElement(By.id("loginBtn"));
+//            webElement.submit();
+//            
+//            webElement = driver.findElement(By.xpath("//*[@id=\"afterBtn\"]"));
+//            webElement.click();
+//            
+//            */
             
-            webElement = driver.findElement(By.xpath("//*[@id=\"mArticle\"]/div[1]/div[2]/ul/li[1]/a"));
-            webElement.click();
+//            webElement = driver.findElement(By.xpath("//*[@id=\"loginBtn\"]"));
+//            webElement.click();
+//          
+//         
+//            Thread.sleep(500); 
+//            
+//            webElement = driver.findElement(By.xpath("//*[@id=\"mArticle\"]/div[1]/div[2]/ul/li[1]/a"));
+//            webElement.click();
             
             
             /*
