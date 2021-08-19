@@ -25,7 +25,12 @@ public class drimstudyDB {
 		//public Connection con; // DB 커넥션 연결 객체
 		cDB = new connectDB();
 		con = cDB.connectDB();
-		
+		if(con==null) {
+			System.out.println("안녕하세요 오류입니다.");
+		}
+		if(cDB ==null) {
+			System.out.println("cDB null 입니다.");
+		}
 
 	}
 	
