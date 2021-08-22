@@ -62,7 +62,7 @@ public class drimstudyDB {
 			System.out.println("ERROR : query문 DB로 전송 실패");
 		    e.printStackTrace();
 		}
-}
+	 }
 	
 	
 	
