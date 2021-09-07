@@ -16,8 +16,10 @@ public class Q2 {
 		int answer = 0;
 		String newStr = "";
 		
+		String arr[] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 		Map<String, String> map = new HashMap<>();
 		
+		/*
 		map.put("zero", "0");
 		map.put("one", "1");
     	map.put("two", "2");
@@ -28,7 +30,12 @@ public class Q2 {
     	map.put("seven", "7");
     	map.put("eight", "8");
     	map.put("nine", "9");
-    	
+    	*/
+		
+		for(int i=0 ; i<arr.length; i++) {
+			map.put(arr[i], Integer.toString(i));
+		}
+		
     	for(String key : map.keySet()) {
     		if(s.contains(key)) {
     			newStr = s.replace(key, map.get(key));
