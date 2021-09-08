@@ -10,6 +10,8 @@
 // (7) 삭제해줄때는 본인과 자신의 앞을 카운트 해줘야 하기 때문에 answer +2 해준다.
 // (8) 최종적으로 삭제된 값인 answer을 출력
 
+// ver1 : 실패
+// 테스트 4,7,8,9,10,11 실패
 package codingtest_9th_2nd;
 
 import java.util.ArrayList;
@@ -30,17 +32,12 @@ public class Q3 {
 	public int solution(int[][] board, int[] moves) {
 		ArrayList<Integer> arr = new ArrayList<Integer>();
         int answer = 0;
-        
-        for(int i=0; i<5; i++) {
-        	System.out.println(board[i][0]);
-        }
+   
         for(int i=0; i<moves.length; i++) {
-        	System.out.println("무브의 값 : "+moves[i]);
         	switch(moves[i]) {
 	        	case 1: 
 	        		for(int j=0; j< board.length; j++) {
 	        			if(board[j][0] != 0) {
-	        				System.out.println("저장되는 값 : "+ board[j][0]);
 	        				arr.add(board[j][0]);
 	        				board[j][0] = 0;
 	        				break;
@@ -51,7 +48,6 @@ public class Q3 {
 	        	case 2:
 	        		for(int j=0; j< board.length; j++) {
 	        			if(board[j][1] != 0) {
-	        				System.out.println("저장되는 값 : "+ board[j][1]);
 	        				arr.add(board[j][1]);
 	        				board[j][1] = 0;
 	        				break;
@@ -62,7 +58,6 @@ public class Q3 {
 	        	case 3:
 	        		for(int j=0; j< board.length; j++) {
 	        			if(board[j][2] != 0) {
-	        				System.out.println("저장되는 값 : "+ board[j][2]);
 	        				arr.add(board[j][2]);
 	        				board[j][2] = 0;
 	        				break;
@@ -73,7 +68,6 @@ public class Q3 {
 	        	case 4:
 	        		for(int j=0; j< board.length; j++) {
 	        			if(board[j][3] != 0) {
-	        				System.out.println("저장되는 값 : "+ board[j][3]);
 	        				arr.add(board[j][3]);
 	        				board[j][3] = 0;
 	        				break;
@@ -84,7 +78,6 @@ public class Q3 {
 	        	case 5:
 	        		for(int j=0; j< board.length; j++) {
 	        			if(board[j][4] != 0) {
-	        				System.out.println("저장되는 값 : "+ board[j][4]);
 	        				arr.add(board[j][4]);
 	        				board[j][4] = 0;
 	        				break;
@@ -93,15 +86,26 @@ public class Q3 {
 	        		}
 	        		break;
         	}
-        	for(Integer item : arr) {
-    			System.out.print(item);
-    		}
-        	System.out.print("\n");
-        	comparison(19960522);
         }
+        
+        answer = comparison(arr, answer);
         return answer;
     }
-	public void comparison(int i) {
-		System.out.println(i);
+	
+	public int comparison(ArrayList<Integer> arr, int answer) {
+		//arr = new ArrayList<Integer>(); // 받은 ArrayList를 초기화 시켜줌
+		int index;
+		while(arr.size()>1) {
+			for(index=1; index<arr.size(); index++) {
+				if(arr.get(index-1)==arr.get(index)) {
+					arr.remove(index);
+					arr.remove(index-1);
+					answer = answer+2;
+					return comparison(arr, answer);
+				}
+			}
+			if(index==arr.size()) break; // 이부분이 진짜 어려웠음 (1)
+		}
+		return answer; // 이부분이 진짜 어려웠음 (2)
 	}
 }
