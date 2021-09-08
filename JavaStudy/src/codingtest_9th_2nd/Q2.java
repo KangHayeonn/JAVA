@@ -7,7 +7,6 @@ package codingtest_9th_2nd;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Q2 {
 	static public void main(String args[]) {

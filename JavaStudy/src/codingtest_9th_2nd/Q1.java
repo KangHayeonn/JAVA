@@ -24,7 +24,7 @@ public class Q1 {
 		
 		Arrays.sort(lost);
 		Arrays.sort(reserve);
-		
+	
 		for(int i=0; i<lost.length; i++) {
 			int key = lost[i];
 			for(int j=0; j<reserve.length; j++) {
