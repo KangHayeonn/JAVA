@@ -1,43 +1,29 @@
 // 체육복 (프로그래머스 LEVEL1)
 
+//ver 2 : 테스트케이스 12, 13 18 실패 (나머지는 모두 성공)
 package codingtest_9th_2nd;
-
-import java.util.Arrays;
-
-
 public class Q1 {
 	static public void main(String[] args) {
 		Q1 s = new Q1();
-		int lost[] = {3};
-		int reserve[] = {1};
-		System.out.println(s.solution(3, lost, reserve));
+		int lost[] = {1,4,5};
+		int reserve[] = {1,4,6};
+		System.out.println(s.solution(5, lost, reserve));
 	}
 	
 	public int solution(int n, int[] lost, int[] reserve) {
 		int answer = 0;
 		int size = reserve.length-1;
 		
-		answer = n - lost.length;
+		answer = n - lost.length; // 안잃어버린 학생수
 		
 		for(int i=0; i<lost.length; i++) {
 			int key = lost[i];
-			if(Arrays.stream(reserve).anyMatch(a-> a==(key-1))) {
-				answer++;
-				int idx = Arrays.binarySearch(reserve, key-1);
-				reserve = delete(idx, reserve, size--);
-				continue;
-			}
-			else if(Arrays.stream(reserve).anyMatch(a-> a==(key+1))) {
-				answer++;
-				int idx = Arrays.binarySearch(reserve, key+1);
-				reserve = delete(idx, reserve, size--); // size-- 가 없으면 ArrayIndexOutOfBoundsException 발생 : 실제 배열 인덱스에 없는 인덱스 값이 들어감
-				continue;
-			}
-			else if(Arrays.stream(reserve).anyMatch(a-> a==(key))) {
-				answer++;
-				int idx = Arrays.binarySearch(reserve, key+1);
-				reserve = delete(idx, reserve, size--); // size-- 가 없으면 ArrayIndexOutOfBoundsException 발생 : 실제 배열 인덱스에 없는 인덱스 값이 들어감
-				continue;
+			for(int j=0; j<reserve.length; j++) {
+				if(reserve[j]==(key-1)||reserve[j]==(key)||reserve[j]==(key+1)) {
+					answer++;
+					reserve = delete(j, reserve, size--);
+					break;
+				}
 			}
 		}
         return answer;
