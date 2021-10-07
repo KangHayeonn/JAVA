@@ -10,19 +10,18 @@
 
 package programmers;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class camouflage {
-	static public void main(String args[] {
+	public static void main(String args[]) {
 		camouflage s = new camouflage();
-		String[][] a = {
+		String[][] clothes = new String[][]{
 				{"yellowhat", "headgear"}, 
 				{"bluesunglasses", "eyewear"}, 
 				{"green_turban", "headgear"}
 		};
-		System.out.println(s.solution(a)); // 이차원배열을 인수로 넘겨주는 방법 아직 미지수
-	})
+		System.out.println(s.solution(clothes)); // 이차원배열을 인수로 넘겨주는 방법 아직 미지수
+	}
 	
 	public int solution(Stirng[][] clothes) {
 		int answer = 1;
