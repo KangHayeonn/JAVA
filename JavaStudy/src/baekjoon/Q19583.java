@@ -10,10 +10,6 @@ import java.util.StringTokenizer;
 public class Q19583 {
 	public static void main(String args[]) throws IOException {
 		
-		//String[] parts = s1.split(":");
-		//int Hour = Integer.valueOf(parts[0]);
-		//int Minute = Integer.valueOf(parts[1]);
-		
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer s = new StringTokenizer(bf.readLine());
 		String S = s.nextToken();
@@ -27,17 +23,17 @@ public class Q19583 {
 		int Q_Hour = Integer.valueOf(Q.split(":")[0]);
 		int Q_Minute = Integer.valueOf(Q.split(":")[1]);
 		
-		System.out.println(S_Hour + " "+ S_Minute);
 		String str = null;
+		int answer =0;
 		HashMap <String, Integer> hashmap = new HashMap<String, Integer>();
 		
 		while((str = bf.readLine())!=null) {
 			String[] parts = str.split(" ");
+			
 			int Hour = Integer.valueOf(parts[0].split(":")[0]);
 			int Minute = Integer.valueOf(parts[0].split(":")[1]);
-
+			
 			String name = parts[1];
-			System.out.println(Hour+"//"+Minute+ ":"+name);
 			
 			if(Hour<S_Hour) hashmap.put(name, 1);
 			else if(Hour==S_Hour && Minute<=S_Minute) hashmap.put(name, 1);
@@ -58,14 +54,14 @@ public class Q19583 {
 		            }
 				}
 			}
+			if(str==null||str.isEmpty()) break;
 			
 		}
 		
-		bf.close();
 		for(String key : hashmap.keySet()) {
-			System.out.println(key + ":" + hashmap.get(key));
+			if(hashmap.get(key)==2) answer++;
 		}
-		System.out.println("123");
+		System.out.println(answer);
 		
 	}
 }
