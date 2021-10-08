@@ -23,7 +23,7 @@ public class camouflage {
 		System.out.println(s.solution(clothes)); // 이차원배열을 인수로 넘겨주는 방법 아직 미지수
 	}
 	
-	public int solution(Stirng[][] clothes) {
+	public int solution(String[][] clothes) {
 		int answer = 1;
         HashMap <String, Integer> hashmap = new HashMap<String, Integer>();
         for(int i=0; i<clothes.length; i++){
