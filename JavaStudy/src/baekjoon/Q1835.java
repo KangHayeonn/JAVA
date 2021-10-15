@@ -18,12 +18,13 @@ public class Q1835 {
 		for(int i=num; i>0; i--) {
 			if(deque.isEmpty()) deque.add(i);
 			else if(i==1) {
+				deque.add(deque.pop());
 				deque.push(i);
 				deque.push(deque.pollLast());
 			}
 			else {
-				deque.push(i);
 				deque.add(deque.pop());
+				deque.push(i);
 			}
 		}
 		while(deque.size()!=0) {
