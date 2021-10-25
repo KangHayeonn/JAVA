@@ -1,6 +1,5 @@
 package Test2;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,7 +50,6 @@ public class Main {
 			
 			for(int i=0; i<inputData.numOfRegion; i++) {
 				temp = scanner.nextLine().split(" ");
-				
 				int numOfFrequency = Integer.valueOf(temp[0]);
 				inputData.frequencies[i] = new int[numOfFrequency];
 				
