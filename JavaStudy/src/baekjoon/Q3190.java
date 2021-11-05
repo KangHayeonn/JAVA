@@ -123,13 +123,15 @@ public class Q3190 {
 						break;
 				default: break;
 			}
-			if(count == arrDirection.get(i).time) {
-				if(arrDirection.get(i).direction.equals("L")) {
-					init_direction = (init_direction+3) % 4;
-				} else {
-					init_direction = (init_direction+1) % 4;
+			if(i < arrDirection.size()) {
+				if(count == arrDirection.get(i).time) {
+					if(arrDirection.get(i).direction.equals("L")) {
+						init_direction = (init_direction+3) % 4;
+					} else {
+						init_direction = (init_direction+1) % 4;
+					}
+					i++;
 				}
-				i++;
 			}
 		}
 		
@@ -138,6 +140,7 @@ public class Q3190 {
 	public static void inputQueue(int[][] arr, int a, int b) {
 		if(arr[a][b]==1) {
 			snake.add(new coordinate(a, b)); // 머리이동
+			arr[a][b]=0; //사과없애주기
 		} else {
 			snake.add(new coordinate(a, b)); // 머리이동
 			snake.remove(); // 꼬리 삭제
