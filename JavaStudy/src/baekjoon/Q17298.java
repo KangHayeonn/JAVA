@@ -87,3 +87,66 @@ public class Q17298 {
 }
 */
 
+// ver2 : 성공 -> 알고리즘 변경
+package baekjoon;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Q17298 {
+	public static void main(String args[]) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int count = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int[] arr = new int[count];
+		Stack<Integer> stack = new Stack<>(); // 중간 스택
+		int[] answer = new int[count];
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		for(int i=0; i<count; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+		int j=0;
+		StringBuilder sb = new StringBuilder();
+		for(int i=count-1; i>=0; i--) {
+			if(i==count-1) {
+				//sb.append(" ").append(-1);
+				answer[j]= -1;
+				j++;
+				stack.add(arr[i]);
+				continue;
+			}
+			while(!stack.isEmpty()) {
+				if(arr[i] < stack.peek()) {
+					//sb.append(" ").append(stack.peek());
+					answer[j]= stack.peek();
+					j++;
+					stack.add(arr[i]);
+					break;
+				}
+				else {
+					stack.pop();
+					//answer[j]= -1;
+				}
+			}
+			if(stack.isEmpty()) {
+				answer[j]= -1;
+				j++;//sb.append(" ").append(-1);
+				stack.add(arr[i]); // ** 이부분이 없으면 틀림
+			}
+		}
+		for(int i=answer.length-1; i>=0; i--) {
+			bw.write(answer[i]+" ");
+		}
+		
+		bw.flush();
+	    bw.close();
+
+	}
+}
+

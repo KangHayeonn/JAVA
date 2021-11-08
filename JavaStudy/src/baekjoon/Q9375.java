@@ -1,3 +1,5 @@
+// 패션왕 신해빈 (백준 9375번)
+
 package baekjoon;
 
 import java.io.BufferedReader;
