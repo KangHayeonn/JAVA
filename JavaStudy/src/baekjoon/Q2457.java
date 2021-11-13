@@ -66,6 +66,11 @@ public class Q2457 {
 		
 		boolean check = false;
 		
+		if(arr.get(0).start_month < StartMonth && arr.get(0).end_month > 11) {
+			System.out.print(1);
+			System.exit(0);
+		}
+		
 		for(int i=0; i<arr.size(); i++) {
 			//System.out.println(arr.get(i).start_month + " " + arr.get(i).start_day + " " + arr.get(i).end_month +" " + arr.get(i).end_day);
 			if(arr.get(i).start_month < StartMonth) {
@@ -106,7 +111,7 @@ public class Q2457 {
 		StartMonth = C_Month; // 4 
 		StartDay = C_Day; // 25
 		
-		//System.out.println("Check : " + C_Month + " : " + C_Day + " "  +answer);
+		System.out.println("Check : " + C_Month + " : " + C_Day + " "  +answer);
 		
 		//Comparison(arr, idx, StartMonth, StartDay, C_Month, C_Day, answer);
 		
