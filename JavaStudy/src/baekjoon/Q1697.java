@@ -54,7 +54,7 @@ public class Q1697 {
 						next = now*2;
 						break;
 				}
-				if(next >= 0 && next < check.length && check[next] ==0) {
+				if(next >= 0 && next < check.length && check[next] ==0) { // 이 부분에서 배열 비교 전에 해당 배열의 인덱스 비교부터 해줘야함 -> ArrayIndexOutOfBounds 에러 뜸
 					q.add(next);
 					check[next] = check[now] +1;
 				}
