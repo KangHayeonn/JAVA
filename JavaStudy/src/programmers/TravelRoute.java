@@ -65,17 +65,17 @@ public class TravelRoute {
 			String key = element.getKey();
 			ArrayList<type> value = element.getValue();
 			
-			System.out.print(key + " : ");
+			//System.out.print(key + " : ");
 			for(int i=0; i<value.size(); i++) {
 				if(first==0) {
 					idx = value.get(i).x;
 					str = value.get(i).airport;
 					first++;
 				}
-				System.out.print(value.get(i).x + " " + value.get(i).airport +" ");
+				//System.out.print(value.get(i).x + " " + value.get(i).airport +" ");
 			}
 			
-			System.out.println("");
+			//System.out.println("");
 		}
 		
 		//System.out.println(map.keySet().toArray()[0]); // 첫번째 키 값 구하는 법
@@ -96,11 +96,12 @@ public class TravelRoute {
 		isVisited[idx] = true; // 1 인덱스가 가리키고 있는 ATL에 가서 돌기
 		ArrayList<type> arr = map.get(airport);
 		
+		if(arr==null) return;
+		
 		for(int i=0; i<arr.size(); i++) {
 			int temp = arr.get(i).x;
+			//System.out.println(arr.get(i).airport);
 			if(!isVisited[temp]) {
-				//if(arr.get(i).airport == null) return;
-				
 				DFS(map, isVisited, N-1, temp, arr.get(i).airport);
 			}
 		}
