@@ -158,5 +158,29 @@ public class LinkedList {
 		public boolean hasNext() {
 			return nextIndex < size();
 		}
+		
+		public void add(Object input) {
+			Node newNode = new Node(input);
+			
+			if(lastReturned == null) {
+				head = newNode;
+				newNode.next = next;
+			} else {
+				lastReturned.next = newNode;
+				newNode.next = next;
+			}
+			
+			lastReturned = newNode;
+			nextIndex++;
+			size++;
+		}
+		
+		public void remove() {
+			if(nextIndex == 0) {
+				throw new IllegalStateException();
+			}
+			LinkedList.this.remove(nextIndex-1); // 속도가 두번 더 걸림
+			nextIndex--;
+		}
 	}
 }

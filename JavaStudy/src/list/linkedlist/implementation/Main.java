@@ -33,8 +33,19 @@ public class Main {
 		
 		System.out.println(i.hasNext());
 		*/
+		i.add(5);
+		i.next();
+		i.add(7);
+		i.remove();
+		while(i.hasNext()) {
+			if((int)i.next()==20) {
+				i.remove();
+			}
+		}
+		System.out.println(numbers);
+		/*
 		while(i.hasNext()) {
 			System.out.println(i.next());
-		}
+		}*/
 	}
 }
