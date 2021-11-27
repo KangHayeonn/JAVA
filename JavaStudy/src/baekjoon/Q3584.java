@@ -1,16 +1,19 @@
 package baekjoon;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Q3584 {
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-
-		int T = sc.nextInt();
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int T = Integer.parseInt(br.readLine());
 		for(int i = 0; i < T; i++) {
-			int N = sc.nextInt();
+			int N = Integer.parseInt(br.readLine());
 			LinkedList<Integer>[] adjList = new LinkedList[N+1];
 			int[] parent = new int[N+1];
 			int[] depth = new int[N+1];
@@ -21,8 +24,9 @@ public class Q3584 {
 			}
 
 			for(int j = 0; j < N-1; j++) {
-				int a = sc.nextInt();
-				int b = sc.nextInt();
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				int a = Integer.parseInt(st.nextToken());
+				int b = Integer.parseInt(st.nextToken());
 
 				vertex[b] = true;
 
@@ -37,9 +41,11 @@ public class Q3584 {
 					root = j;
 				}
 			}
+			
+			StringTokenizer st1 = new StringTokenizer(br.readLine());
 
-			int v1 = sc.nextInt();
-			int v2 = sc.nextInt();
+			int v1 = Integer.parseInt(st1.nextToken());
+			int v2 = Integer.parseInt(st1.nextToken());
 			
 			// DFS로 트리를 순회하며 각 노드의 깊이와 부모노드 배열에 저장 
 			dfs(adjList, depth, parent, root, 0, -1);
@@ -84,5 +90,4 @@ public class Q3584 {
 		
 		System.out.println(a);
 	}
-
 }

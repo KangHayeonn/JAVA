@@ -171,7 +171,7 @@ public class Q1991 {
 		public static void preOrder(Node node) {
 			if(node ==null) return;
 			
-			System.out.println(node.c);
+			System.out.print(node.c);
 			preOrder(node.left);
 			preOrder(node.right);
 		}
@@ -179,7 +179,7 @@ public class Q1991 {
 			if(node ==null) return;
 			
 			inOrder(node.left);
-			System.out.println(node.c);
+			System.out.print(node.c);
 			inOrder(node.right);
 		}
 		public static void postOrder(Node node) {
@@ -187,7 +187,7 @@ public class Q1991 {
 			
 			postOrder(node.left);
 			postOrder(node.right);
-			System.out.println(node.c);
+			System.out.print(node.c);
 		}
 	}
 	public static void main(String args[]) throws IOException{
