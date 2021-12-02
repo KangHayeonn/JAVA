@@ -30,10 +30,6 @@ public class Q2800 {
 			this.start = start;
 			this.end = end;
 		}
-		
-		public String toString() {
-			return start + " : " + end;
-		}
 	}
 	public static void main(String args[]) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -42,7 +38,6 @@ public class Q2800 {
 		Stack<Integer> stack = new Stack<>();
 		ArrayList<type> arr = new ArrayList<>();
 		
-		int idx=0;
 		String result = "";
 		
 		for(int i=0; i<str.length(); i++) {
