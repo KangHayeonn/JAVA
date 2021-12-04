@@ -50,7 +50,10 @@ public class Q2800 {
 				result += str.charAt(i);
 			}
 		}
-		
+		/*
+		for(int i=0; i<arr.size(); i++) {
+			System.out.println(arr.get(i).start + " : " + arr.get(i).end);
+		}*/
 		boolean[] visited = new boolean[arr.size()];
 
 		for(int i=1; i<arr.size(); i++) {
@@ -77,22 +80,16 @@ public class Q2800 {
 	
 	static void print(ArrayList<type> arr, boolean[] visited, int n, String str) {
 		StringBuffer s = new StringBuffer(str);
-		int count=0;
-		int x = 0;
+
         for (int i = 0; i < n; i++) {
         	s = new StringBuffer(s);
             if (!visited[i]) {
-            	if(arr.get(i).start <= x) {
-            		s.replace(arr.get(i).start, arr.get(i).start+1, "");
-                	s.replace(arr.get(i).end-(count+1), arr.get(i).end-count, "");
-            	} else {
-            		s.replace(arr.get(i).start-count, arr.get(i).start-count+1, "");
-                	s.replace(arr.get(i).end-(count+1), arr.get(i).end-count, "");
-            	}
-            	x = arr.get(i).start;
-            	count= count+2;
+            	s.replace(arr.get(i).start, arr.get(i).start+1, "&");
+            	s.replace(arr.get(i).end, arr.get(i).end+1, "&");
             }  
         }
-        set.add(s.toString());
+        String newStr = s.toString();
+        newStr = newStr.replace("&", "");
+        set.add(newStr);
     }
 }
