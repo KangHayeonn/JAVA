@@ -126,7 +126,7 @@ public class Q1991 {
 	}
 }*/
 
-/*
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -207,4 +207,4 @@ public class Q1991 {
 		System.out.println();
 		tree.postOrder(tree.root);
 	}
-}*/
+}
