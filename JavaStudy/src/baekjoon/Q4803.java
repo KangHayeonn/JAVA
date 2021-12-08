@@ -76,7 +76,7 @@ public class Q4803 {
 			
 			// 방문하지 않은 노드들을 기준으로 cycle을 다시 확인해봄 -> cycle이 없으면 트리이므로 그때 따로 count 해줌
 			for(int i=1; i<n+1; i++) {
-				if(!visited[i] && !isCycle(i, 0)) count++;
+				if(!visited[i] && !isCycle(i, 0)) count++; 
 			}
 			
 			if(count==0) {
