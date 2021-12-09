@@ -71,7 +71,7 @@ public class Q18352 {
 		city[V] = 0;
 		
 		while(!queue.isEmpty()) {
-			type q = queue.poll();
+			type q = queue.poll(); // 0 1
 			int depth = q.depth; 
 			int x = q.node; 
 
@@ -89,7 +89,7 @@ public class Q18352 {
 		}	
 		//boolean check = false;
 		for(int i=1; i<city.length; i++) {
-			if(city[i] == K) {
+			if(city[i] == K) {    
 				//sb.append(i).append("\n");
 				//check = true;
 				arr.add(i);
