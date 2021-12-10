@@ -21,7 +21,7 @@ public class Q11404 {
 			for(int j=0; j<n; j++) {
 				if(i==j) list[i][j] = 0;
 				else {
-					list[i][j] = 10000000;
+					list[i][j] = 10000000; // 범위 수정 (100000 -> 10000000)ㄴ
 					list[j][i] = 10000000;
 				}
 			}
