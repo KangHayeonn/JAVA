@@ -37,6 +37,8 @@ public class Q2470 {
 		int min_right = arr[right];
 		
 		while(left < right) {
+			System.out.println(left + " " + right);
+			System.out.println("값 : " + min_left + " " + min_right);
 			int v1 = arr[left] + arr[right];   // 두 용액의 합
 	
 			if(v1 == 0) {
@@ -45,15 +47,21 @@ public class Q2470 {
 				min_right = arr[right];
 				break;
 			}
-			else if(v1 > 0) right--;
-			else left++;
+			else if(v1 > 0) {
+				right--;
+			}
+			else {
+				left++;
+			}
 			
 			int v2 = Math.abs(arr[left] + arr[right]); // 두 용액의 합의 절댓값
 			
 			if(v2 < min) {
-				min = v2;
-				min_left = arr[left];
-				min_right = arr[right];
+				if(left!=right) { // (** 주의) 이 부분 조건 중요
+					min = v2;
+					min_left = arr[left];
+					min_right = arr[right];
+				}
 			}
 		}
 		

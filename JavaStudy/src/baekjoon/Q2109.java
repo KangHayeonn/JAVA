@@ -25,7 +25,9 @@ public class Q2109 {
 		}
 		@Override
 		public int compareTo(type o1) {
-			return o1.pay - this.pay;
+			//if(this.date == o1.date) return this.pay - o1.pay;
+			//else return this.date - o1.date;  // 날짜를 기준으로 최소 힙
+			return this.pay - o1.pay;
 		}
 	}
 	public static void main(String args[]) throws IOException {
@@ -50,24 +52,38 @@ public class Q2109 {
 			}
 		});
 		
+		//System.out.println(Arrays.deepToString(list));
 		PriorityQueue<type> pQ = new PriorityQueue<>();
 		int answer = 0; // 이전 강의료
 		
-		int size = list[0][1]; // 최대 일수
+		int day = list[0][1]; // 남은 일수
 		
-		for(int i= size; i>0; i--) {
-			System.out.println(i);
-			for(int j=0; j<list.length && list[j][1] == i; j++) {
-				System.out.println("tetst " + j);
-				pQ.add(new type(list[j][0], list[j][1]));
-				System.out.println("들어오나?" + list[j][0]);
+		for(int i=0; i<list.length; i++) {
+			if(day > 0) { // 들어갈 자리가 있는지 확인
+				pQ.add(new type(list[i][0], list[i][1]));
+				day = Math.min(list[i][1] -1, day-1); // 2
+				type x = pQ.peek();
+				System.out.println("들어오는 거 체크 " + i + "번째 -> " + x.pay +" " + x.date +" date :: " + day);
+			} else {
+				type np = pQ.peek();
+				while(np.date > list[i][1]){// 5 50 10 100 
+					answer += np.pay;
+				}
+				System.out.println(i+ " 번쨰 -> " + day +" np: "+ np);
+				if(np.pay < list[i][0]) {
+					pQ.poll();
+					pQ.add(new type(list[i][0], list[i][1]));
+					day = Math.min(list[i][1] -1, day-1);
+				} else continue;
 			}
-		}
-		while(!pQ.isEmpty()) {
-			type p = pQ.remove();
 			
-			System.out.println(p.pay + " " +p.date);
 		}
-		//System.out.println(answer);
+		
+		while(!pQ.isEmpty()) {
+			type x = pQ.poll();
+			//System.out.println(x.pay +" " + x.date);
+			answer += x.pay;
+		}
+		System.out.print(answer);
 	}
 }
