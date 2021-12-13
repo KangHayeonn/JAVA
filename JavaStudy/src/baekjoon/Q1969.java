@@ -9,7 +9,10 @@ package baekjoon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -22,7 +25,7 @@ public class Q1969 {
 		int N = Integer.parseInt(st.nextToken()); // DNA의 수
 		int M = Integer.parseInt(st.nextToken()); // 문자열의 길이
 		
-		String str_arr[] = new String[M];
+		String str_arr[] = new String[N];
 		
 		for(int i=0; i<N; i++) {
 			String str = br.readLine();
@@ -30,8 +33,7 @@ public class Q1969 {
 		}
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		
-		String dna = "";
+
 		int h_distance = 0;
 		
 		for(int i=0; i<M; i++) {
@@ -49,19 +51,37 @@ public class Q1969 {
 					default : t++; break;
 				}
 			}
-			map.put("A", a); map.put("C", c); map.put("A", g); map.put("A", t);
+			map.put("A", a); map.put("C", c); map.put("G", g); map.put("T", t);
 			
-			Entry<String, Integer> maxEntry =null;
+			List<String> keys = new ArrayList<>(map.keySet());
+			Collections.sort(keys); // key 오름차순 정렬 중요 !
 			
-			Set<Entry<String, Integer>> entrySet = map.entrySet();
+			String maxString = "";
+			int maxInt = 0;
+			for(String key : keys) {
+				if(maxString == "" || map.get(key) > maxInt) {
+					maxString = key;
+					maxInt = map.get(key);
+				}
+			}
+			System.out.print(maxString);
+			
+			/*Set<Entry<String, Integer>> entrySet = map.entrySet();
 			for(Entry<String, Integer> entry : entrySet) {
 				if(maxEntry == null || entry.getValue()> maxEntry.getValue()) {
 					maxEntry = entry;
+					System.out.println(maxEntry);
+				}
+			}*/
+			
+			//System.out.print(maxEntry.getKey());
+			Set<Entry<String, Integer>> entrySet = map.entrySet();
+			for(Entry<String, Integer> entry : entrySet) {
+				if(!entry.getKey().equals(maxString)) {
+					h_distance += entry.getValue();
 				}
 			}
-			
-			System.out.println(maxEntry.getKey() + " : " + maxEntry.getValue());
 		}
-		
+		System.out.print("\n" + h_distance);
 	}
 }
