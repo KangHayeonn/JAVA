@@ -2,7 +2,8 @@
 
 /* [ 알고리즘 ]
  * 
- * 1. A가 B를 신뢰할 경우 (B->A로 가는 단방향 그래프를 만든다)
+ * 1. A가 B를 신뢰할 경우 (B->A로 가는 단방향 그래프를 만든다) -> 시간초과
+ * -> ( A->B 로 가는 그래프를 만들어야함 )
  * 2. DFS를 이용해 시작 지점에서 갈 수 있는 최대 노드를 저장한다.
  * 3. 모든 지점에서 2번과 같이 돌린다.
  * 4. 모든 지점 중 값이 가장 큰 노드를 찾고 동일한 값인 노드가 여러개 있을 경우 오름차순으로 출력한다.
@@ -40,18 +41,18 @@ public class Q1325 {
 			int A = Integer.parseInt(st.nextToken());
 			int B = Integer.parseInt(st.nextToken());
 			
-			list[B].add(A);
+			list[A].add(B);
 		}
 		
 		count = new int[N+1];
 		for(int i=1; i<=N; i++) {
 			isVisited = new boolean[N+1];
-			isVisited[i] = true;
-			dfs(N, M, i, i);
+			dfs(N, M, i);
 		}
 		
 		int Max = 0;
 		for(int i=1; i<=N; i++) {
+			System.out.println(count[i]);
 			if(Max < count[i]) Max = count[i];
 		}
 		
@@ -62,14 +63,14 @@ public class Q1325 {
 		System.out.print(sb);
 	}
 	
-	public static void dfs(int N, int M, int V, int start) {
-		if(V > N) return;
+	public static void dfs(int N, int M, int V) {
+		isVisited[V] = true;
 		
 		for(Integer i : list[V]) {
 			if(!isVisited[i]) {
-				dfs(N, M, i, start);
+				dfs(N, M, i);
 				isVisited[V] = true;
-				count[start]++;
+				count[i]++;
 			}
 		}
 	}
