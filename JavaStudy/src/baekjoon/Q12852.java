@@ -21,26 +21,17 @@ public class Q12852 {
 		int[] dp = new int[N+1]; // 인덱스가 숫자를 의미 (1~N)
 		String[] calc = new String[N+1]; // 연산 리스트
 		
-		if(N == 1) {
-			System.out.print(0 + "\n" + 1);
-			return;
-		}
-		else if(N == 2) {
-			System.out.print(1 +"\n" + 2 + " " + 1);
-			return;
-		}
-		
 		dp[1] = 0; calc[1] = "1";
-		dp[2] = 1; calc[2] = "2" + " " + "1";
-		dp[3] = 1; calc[3] = "3" + " " + "1";
+		// dp[2] = 1; calc[2] = "2" + " " + "1";
+		// dp[3] = 1; calc[3] = "3" + " " + "1";
 		
-		for(int i=4; i<=N; i++) {
+		for(int i=2; i<=N; i++) {
 			dp[i] = 1000001;
 		}
 		
 		int check = 0; // 1: -1, 2: %2, 3: %3일 경우
 		
-		for(int i=4; i<=N; i++) { 
+		for(int i=2; i<=N; i++) { 
 			
 			if(i%3==0) {
 				if(dp[i/3]+1 < dp[i]) {
@@ -49,22 +40,22 @@ public class Q12852 {
 				}
 			}
 			
-			if(dp[i]%2==0) {
+			if(i%2==0) {
 				if(dp[i/2]+1 < dp[i]) {
 					dp[i] = dp[i/2]+1;
 					check = 2;
 				}
 			}
-			
+
 			if(dp[i-1]+1 < dp[i]) {
 				dp[i] = dp[i-1] + 1;
 				check = 1;
 			}
 			
 			switch(check) {
-				case 1: calc[i] = i + " " + calc[i-1]; System.out.println(check + " -> " + i + " : " + dp[i] + " . " + i + " " + calc[i]); break;
-				case 2: calc[i] = i + " " + calc[i/2]; System.out.println(check + " -> " + i + " : " + dp[i] + " . " + i + " " + calc[i]); break;
-				case 3: calc[i] = i + " " + calc[i/3]; System.out.println(check + " -> " + i + " : " + dp[i] + " . " + i + " " + calc[i]); break;
+				case 1: calc[i] = i + " " + calc[i-1]; break;
+				case 2: calc[i] = i + " " + calc[i/2]; break;
+				case 3: calc[i] = i + " " + calc[i/3]; break;
 				default : break;
 			}
 			// System.out.println(i + " -> " +dp[i]);
