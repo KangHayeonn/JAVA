@@ -3,13 +3,13 @@
 /* [ 알고리즘 ]
  * 
  * 1. report를 입력받을 때 중복을 제거하고 배열에 저장
- * 2. id_list는 key, value로 저장하기 위해 map을 사용
- * 3. 1번을 반복문을 돌면서 해당 report를 카운트 해서 map에 저장
- * 4. value중에 k값 이상인 것을 세서 새로운 배열에 저장
+ * 2. report를 카운트 해서 해당 value를 map에 저장
+ * 3. 2번의 value중 k를 넘지 않는 것들을 제외하고 정답배열에 +1 해줌
  * 
  */
 package programmers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,50 +31,44 @@ public class ReportResult {
 	
 	public static int[] solution(String[] id_list, String[] report, int k) {
 		
+		int[] answer = new int[id_list.length];
+		
 		// 배열 -> Set (중복 제거)
-		Set<String> set = new HashSet<String>(Arrays.asList(report));
-		System.out.println(set);
-		
+		Set<String> set = new HashSet<String>(Arrays.asList(report));	
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		Map<String, Integer> mail = new HashMap<String, Integer>();
 		
-		for(int i=0; i<id_list.length; i++) {
-			String str = id_list[i];
-			map.put(str, 0);
-			mail.put(str, 0);
-		}
-		
-		for(String r: set) {
-			String[] rList = r.split(" ");
-			String report_id = rList[1];
+		for(String s : set) {
+			String[] sList = s.split(" ");
+			String report_id = sList[1];
 			
-			System.out.println("value : " + map.get(report_id));
-			map.put(report_id, map.get(report_id)+1);
-		}
-		
-		for(String key : map.keySet()) {
-			if(map.get(key) >= k ) {
-				for(String s : set) {
-					String[] sList = s.split(" ");
-					String user_id = sList[0];
-					String report_id = sList[1];
-					
-					if(key.equals(report_id)) {
-						mail.put(user_id,mail.get(user_id)+1);
-					}
- 				}
+			if(map.containsKey(report_id)) {
+				map.put(report_id, map.get(report_id)+1);
+			} else {
+				map.put(report_id, 1);
 			}
-			System.out.println("key : " + key + " value : " + map.get(key));
 		}
 		
-		int[] answer = new int[mail.size()];
-		int i = 0;
-		for(String s : mail.keySet()) {
-			answer[i] = mail.get(s);
-			i++;
+		ArrayList<String> arr = new ArrayList<>();
+
+		for(String s : map.keySet()) {
+			if(map.get(s) < k) {
+				arr.add(s);
+			}
 		}
-		
-		System.out.println(Arrays.toString(answer));
+
+		for(String s  : set) {
+			String[] sList = s.split(" ");
+			String user_id = sList[0];
+			String report_id = sList[1];
+			
+			if(arr.contains(report_id)) continue;
+			
+			for(int i=0; i<id_list.length; i++) {
+				if(user_id.equals(id_list[i])) {
+					answer[i] += 1;
+				}
+			}
+		}
 		
 		return answer;
 	}
