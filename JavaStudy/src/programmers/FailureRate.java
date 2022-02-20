@@ -24,12 +24,12 @@ public class FailureRate {
 		}
 	}
 	public static void main(String args[]) {
-		//int[] stages = {2, 1, 2, 6, 2, 4, 3, 3};
+		// int[] stages = {2, 1, 2, 6, 2, 4, 3, 3};
 		int[] stages = {4, 4, 4, 4, 4};
 		System.out.println(Arrays.toString(solution(4, stages)));
 	}
-	public static float[] solution(int N, int[] stages) {
-		float[] answer = new float[N+1];
+	public static int[] solution(int N, int[] stages) {
+		int[] answer = new int[N];
 		int index = 1;
 		
 		int clear = 0;
@@ -39,26 +39,42 @@ public class FailureRate {
 		PriorityQueue<type> pq= new PriorityQueue<>();
 		
 		int before = stages[0];
+		boolean check = false;
 		
 		for(int i=0; i<stages.length; i++) {
-			System.out.println("v: " + before +" i : " + stages[i]);
 			if(stages[i]!=before) {
 				float value = (float)cnt / (stages.length-clear);
 				pq.add(new type(index++, value));
 				clear += cnt;
 				cnt = 1;
 				before = stages[i];
+				check = true;
 			} else if(stages[i] == before) {
 				cnt++;
+				check = false;
 			}
 		}
-		// 이부분 일단 skip
-		float value = (float)(cnt-1) / (stages.length-clear);
-		pq.add(new type(index, value));
 		
+		while(index<=N) {
+			if(index<N) {
+				pq.add(new type(index, 0));
+				index++;
+			} else {
+				if(check) {
+					float value = (float)(cnt-1) / (stages.length-clear);
+					pq.add(new type(index, value));
+				} else {
+					float value = (float)(cnt) / (stages.length-clear);
+					pq.add(new type(index, value));
+				}
+				index++;
+			}
+		}
+		
+		index = 0;
 		while(!pq.isEmpty()) {
 			type p = pq.poll();
-			System.out.println(p.index + " value: " + p.value);
+			answer[index++] = (int)(p.index);
 		}
 		return answer;
 	}
