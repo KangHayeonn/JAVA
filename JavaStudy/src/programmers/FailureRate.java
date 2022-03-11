@@ -24,52 +24,37 @@ public class FailureRate {
 		}
 	}
 	public static void main(String args[]) {
-		// int[] stages = {2, 1, 2, 6, 2, 4, 3, 3};
-		int[] stages = {4, 4, 4, 4, 4};
-		System.out.println(Arrays.toString(solution(4, stages)));
+		int[] stages = {2, 1, 2, 6, 2, 4, 3, 3};
+		// int[] stages = {4, 4, 4, 4, 4};
+		System.out.println(Arrays.toString(solution(5, stages)));
 	}
 	public static int[] solution(int N, int[] stages) {
 		int[] answer = new int[N];
 		int index = 1;
-		
-		int clear = 0;
-		int cnt = 0;
-		
-		Arrays.sort(stages);
-		PriorityQueue<type> pq= new PriorityQueue<>();
-		
-		int before = stages[0];
-		boolean check = false;
-		
-		for(int i=0; i<stages.length; i++) {
-			if(stages[i]!=before) {
-				float value = (float)cnt / (stages.length-clear);
-				pq.add(new type(index++, value));
-				clear += cnt;
-				cnt = 1;
-				before = stages[i];
-				check = true;
-			} else if(stages[i] == before) {
-				cnt++;
-				check = false;
-			}
-		}
-		
-		while(index<=N) {
-			if(index<N) {
-				pq.add(new type(index, 0));
-				index++;
-			} else {
-				if(check) {
-					float value = (float)(cnt-1) / (stages.length-clear);
-					pq.add(new type(index, value));
-				} else {
-					float value = (float)(cnt) / (stages.length-clear);
-					pq.add(new type(index, value));
-				}
-				index++;
-			}
-		}
+
+		int[] stayed_not_clear = new int[N + 2];	// 스테이지에 도달했으나 아직 클리어하지 못한 플레이어수
+        int[] stayed_clear = new int[N + 1];	// 스테이지에 도달한 플레이어 수
+        PriorityQueue<type> pq= new PriorityQueue<>();
+
+        for (int i = 0; i < stages.length; i++) {
+            stayed_not_clear[stages[i]]++;
+        }
+
+        stayed_clear[N] = stayed_not_clear[N] + stayed_not_clear[N + 1];
+        for (int i = N-1; i >= 1; i--) {
+        	stayed_clear[i] = stayed_not_clear[i] + stayed_clear[i + 1];
+        }
+
+        for (int i = 1; i <= N; i++) {
+            
+            if(stayed_clear[i]==0){ //스테이지에 도달한 유저가 없는 경우 해당 스테이지의 실패율은 0
+                pq.add(new type(i, 0));
+                continue;
+            }
+            
+            float rate = (float) stayed_not_clear[i] / stayed_clear[i];
+            pq.add(new type(i, rate));
+        }
 		
 		index = 0;
 		while(!pq.isEmpty()) {

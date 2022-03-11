@@ -21,7 +21,7 @@ public class DartGame {
 			
 			if(Character.isDigit(c) ) {
 				if(num==0) {
-					num = c - '0'; // 숫자로 변환 (0~9)
+					num = c - '0'; // 숫자로 변환
 				} else { // num =1 일때
 					num = num*10; // 숫자 10 이 들어올 경우
 				}
