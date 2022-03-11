@@ -47,7 +47,7 @@ public class FailureRate {
 
         for (int i = 1; i <= N; i++) {
             
-            if(stayed_clear[i]==0){ //스테이지에 도달한 유저가 없는 경우 해당 스테이지의 실패율은 0
+            if(stayed_clear[i]==0){ 
                 pq.add(new type(i, 0));
                 continue;
             }
