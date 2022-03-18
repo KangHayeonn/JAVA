@@ -10,6 +10,8 @@
  */
 package programmers;
 
+//ver 1
+/*
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
@@ -86,6 +88,56 @@ public class Tuple {
 				check = false;
 			}
 			idx++;
+		}
+		
+		return answer;
+	}
+}
+*/
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+
+// ver2
+public class Tuple {
+	public static void main(String args[]) {
+		String str = "{{4,2,3},{3},{2,3,4,1},{2,3}}";
+		System.out.println(Arrays.toString(solution(str)));
+	}
+	public static int[] solution(String s) {
+		Map<Integer, Integer> map = new HashMap<>();
+		
+		String[] strArr = s.split("\\{|\\}|,");
+		
+		for(int i=0; i<strArr.length; i++) {
+			
+			if(strArr[i]==null || strArr[i].isEmpty()) continue;
+			
+			if(Character.isDigit(strArr[i].charAt(0))) {
+				int num = Integer.parseInt(strArr[i]);
+				
+				if(map.containsKey(num)) {
+					map.put(num, map.get(num)+1);
+				} else {
+					map.put(num, 1);
+				}
+			}
+		}
+		
+		// Map.Entry 리스트 작성
+		List<Map.Entry<Integer,Integer>> list = new ArrayList<>(map.entrySet());
+		Collections.sort(list, (o1, o2) -> o2.getValue() - o1.getValue());
+		
+		int[] answer = new int[map.size()];
+		int i=0;
+		
+		for(Map.Entry<Integer, Integer> entry : list) {
+			answer[i] = entry.getKey();
+			i++;
 		}
 		
 		return answer;
