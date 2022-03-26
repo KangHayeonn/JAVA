@@ -1,4 +1,4 @@
-// 예산 (프로그래머스 스쿨 커뮤러닝 3기)
+// 예산 (Step1-3)
 
 package programmersSchool;
 
