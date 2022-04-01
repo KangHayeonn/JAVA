@@ -64,7 +64,7 @@ public class BashStation {
 */
 
 // ver2
-
+/*
 public class BashStation {
 	public static void main(String args[]) {
 		int[] stations =  {5, 7, 20};
@@ -103,5 +103,31 @@ public class BashStation {
         }
 
         return answer;	
+	}
+}
+*/
+
+// ver3 : 코드 리팩토링
+
+public class BashStation {
+	public static void main(String args[]) {
+		int[] stations =  {5, 7, 20};
+		
+		System.out.println(solution(30, stations, 3));
+	}
+	public static int solution(int n, int[] stations, int w) {
+		int answer = 0, num = 0;
+		int before = w+1;
+
+		for(int s : stations) {
+		    num = s - before;   
+		    answer += (num > 0) ? (int)Math.ceil((num) / (double)(2*w+1)) : 0;
+		    before = s + 2*w+1;
+		}
+
+		num = n-before+w+1;
+		answer += (num > 0) ? (int)Math.ceil((num) / (double)(2*w+1)) : 0;
+
+		return answer;
 	}
 }
