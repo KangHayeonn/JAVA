@@ -1,7 +1,24 @@
 package Test3;
 
 public class Main {
+	public static void main(String[] args) {
+		System.out.println(reverse());
+		
+		// 문자열
+		String str = "ABCDE";
+		// 문자열 reverse
+		StringBuffer sb = new StringBuffer(str);
+		String reverse = sb.reverse().toString();
+		// 결과 출력
+		System.out.println(sb); // "EDCBA"
+		System.out.println(reverse); // "EDCBA"
 
+	}
+	public static String reverse() { 
+		StringBuilder builder = new StringBuilder("abcdef");
+		return builder.reverse().toString(); 
+	// return (new StringBuffer(str).reverse().toString()); 
+	}
 }
 
 // 에네첸 유치원의 달님반 9명의 아이들이 공원으로 소풍을 떠난다.
