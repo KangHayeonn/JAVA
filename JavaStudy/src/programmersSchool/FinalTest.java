@@ -6,9 +6,11 @@ import java.util.*;
 
 public class FinalTest {
 	public static void main(String[] args) {
-		String[] s1 = {"A", "B", "C", "F", "E", "D", "H", "H"};
-		String[] s2 = {"G", "G", "B", "B", "C", "F", "F", "E"};
-		System.out.println(Arrays.toString(solution(s1, s2, "G")));
+		// String[] s1 = {"A", "B", "C", "F", "E", "D", "H", "H"};
+		// String[] s2 = {"G", "G", "B", "B", "C", "F", "F", "E"};
+		String[] s1 = {"G", "G", "B", "C", "C", "E"};
+		String[] s2 = {"B", "C", "D", "E", "F", "A"};
+		System.out.println(Arrays.toString(solution(s2, s1, "G")));
 	}
 	public static class Type {
         private String alpa;
