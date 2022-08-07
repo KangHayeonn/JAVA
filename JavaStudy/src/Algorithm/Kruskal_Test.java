@@ -36,7 +36,7 @@ public class Kruskal_Test {
       /* 최상위 부모 찾는 함수(재귀) */
       public static int find(int x) {
 		if(parent[x] == x) return x;
-		else return parent[x] = find(parent[x]);  // x의 부모의 부모
+		return parent[x] = find(parent[x]);  // x의 부모의 부모
 	}
 	/* 최상위 노드 합치는 함수*/
 	public static void union(int a, int b) {
