@@ -50,10 +50,9 @@ public class Q21609 {
 		while(true) {
 			cnt = autoPlay();
 			
-			if(cnt == 0) break;
+			if(cnt < 2) break;
 			else {
-				System.out.println(Arrays.deepToString(map));
-				totalCnt += cnt;
+				totalCnt += cnt*cnt;
 				autoPlayStep3();
 				autoPlayStep4();
 				autoPlayStep3();
@@ -81,7 +80,6 @@ public class Q21609 {
 				if(num >= 1 && num <= M) {
 					isVisited = new boolean[N][N];
 					autoPlayStep1(i, j, num);
-					System.out.println("-------------------");
 				}
 			}
 		}
@@ -92,13 +90,12 @@ public class Q21609 {
 			for(Cood m : t.arr) {
 				map[m.r][m.c] = -2;
 			}
-			// System.out.println(t.r + " " + t.c + " , "+ t.cnt + " , "+ t.rainbowCnt);
+			
 			return t.cnt;
 		}
 		return 0;
 	}
 	public static void autoPlayStep1(int r, int c, int K) {
-		System.out.println("좌표 : "+ r + " , "+ c);
 		Queue<Cood> q = new LinkedList<>();
 		ArrayList<Cood> tmpArr = new ArrayList<>();
 		tmpArr.add(new Cood(r, c));
@@ -122,37 +119,140 @@ public class Q21609 {
 			}
 		}
 		
-		// System.out.println("test------------------");
 		int originR = r, originC = c;
 		int rainbowCnt = 0;
 		for(Cood t : tmpArr) {
-			// System.out.print(t.r + " : " + t.c + ", ");
 			if(map[t.r][t.c] == 0) rainbowCnt += 1;
-			
-			if(originR > t.r) {
-				originR = t.r;
-				originC = t.c;
-			} else if(originR == t.r && originC > t.c) {
-				originR = t.r;
-				originC = t.c;
-			} else continue;
+			else { // 반례 이유 : 기준 블록 선정시 무지개 블록을 제외하지 않았었음 (else 추가해야함)
+				if(originR > t.r) {
+					originR = t.r;
+					originC = t.c;
+				} else if(originR == t.r && originC > t.c) {
+					originR = t.r;
+					originC = t.c;
+				} else continue;
+			}
 		}
 		
 		pq.offer(new Type(originR, originC, tmpArr.size(), rainbowCnt, tmpArr));
-		// System.out.println();
-		// System.out.println("기준R : " + originR + ", 기준C: "+  originC + ", 무지개갯수 : " + rainbowCnt);
-		// System.out.println("\n\n");
-
 	}
 	public static void autoPlayStep3() {
 		// 중력을 적용
+		int[][] cntArr = new int[N][N];
+		int[][] tmpMap = new int[N][N];
+		
+		for(int i=0; i<N; i++) {
+			for(int j=0; j<N; j++) {
+				tmpMap[i][j] = -5; // -5로 초기화
+			}
+		}
+		
 		for(int c=0; c<N; c++) {     // 열
-			int cntDown; // 떨어지는 칸수
+			int cntDown = 0; // 떨어지는 칸수
 			for(int r=N-1; r>=0; r--) { // 행
+				if(map[r][c] == -2) cntDown += 1;
+				else if(map[r][c] == -1) {
+					cntDown = 0;
+					cntArr[r][c] = -1;
+				}
+				else cntArr[r][c] = cntDown;
+			}
+		}
+		
+		int num;
+		for(int i=0; i<N; i++) {
+			for(int j=0; j<N; j++) {
+				num = cntArr[i][j];
+				
+				if(num > 0) {
+					tmpMap[i+num][j] = map[i][j];
+					map[i][j] = -2;
+				}
+			}
+		}
+		
+		for(int i=0; i<N; i++) {
+			for(int j=0; j<N; j++) {
+				if(tmpMap[i][j] >= 0) map[i][j] = tmpMap[i][j];
 			}
 		}
 	}
 	public static void autoPlayStep4() {
 		// 90도 반시계방향으로 회전
+		int K;
+		if(N%2 == 0) K = N/2;
+		else K = N/2 + 1;
+		
+		int T = N;
+		for(int i=0; i<K; i++) {
+			counterClockWise(i, i, T);
+			T -= 2;
+		}
+	}
+	public static void counterClockWise(int r, int c, int T) {
+		int R = r + T;
+		int C = c + T;
+		
+		// ↓
+		int idx = 0;
+		int[] Left = new int[T];
+		for(int i=r; i<R; i++) {
+			Left[idx] = map[i][c];
+			idx += 1;
+		}
+		
+		// →
+		idx = 0;
+		int[] Down = new int[T];
+		for(int i=c; i<C; i++) {
+			Down[idx] = map[R-1][i];
+			idx += 1;
+		}
+		
+		// ↑
+		idx = 0;
+		int[] Right = new int[T];
+		for(int i=R-1; i>=r; i--) {
+			Right[idx] = map[i][C-1];
+			idx += 1;
+		}
+		
+		// ←
+		idx = 0;
+		int[] Top = new int[T];
+		for(int i=C-1; i>=c; i--) {
+			Top[idx] = map[r][i];
+			idx += 1;
+		}
+		
+		///////////////////////////////
+		
+		// ↓ (Top 대입)
+		idx = 0;
+		for(int i=r; i<R; i++) {
+			map[i][c] = Top[idx];
+			idx += 1;
+		}
+		
+		// → (Left 대입)
+		idx = 0;
+		for(int i=c; i<C; i++) {
+			map[R-1][i] = Left[idx];
+			idx += 1;
+		}
+		
+		// ↑ (Down 대입)
+		idx = 0;
+		for(int i=R-1; i>=r; i--) {
+			map[i][C-1] = Down[idx];
+			idx += 1;
+		}
+		
+		// ← (Right 대입)
+		idx = 0;
+		for(int i=C-1; i>=c; i--) {
+			map[r][i] = Right[idx];
+			idx += 1;
+		}
 	}
 }
