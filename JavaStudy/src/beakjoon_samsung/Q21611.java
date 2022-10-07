@@ -13,6 +13,7 @@ public class Q21611 {
 	static int shark_r, shark_c;
 	static Map<Integer, Cood> numToMap;
 	static Queue<Integer> q; // 공백부터 구슬의 번호를 저장
+	static int ballOne=0, ballTwo=0, ballThree=0; // 폭발한 1번~3번 구슬의 개수
 	public static class Type {
 		int d; // 방향
 		int s; // 거리
@@ -43,8 +44,6 @@ public class Q21611 {
 			}
 		}
 		
-		System.out.println(Arrays.deepToString(map));
-		
 		magicArr = new Type[M];
 		for(int i=0; i<M; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -67,38 +66,22 @@ public class Q21611 {
 			for(int j=1; j<=s; j++) {
 				nr = shark_r + dr_magic[d]*j;
 				nc = shark_c + dc_magic[d]*j;
-				System.out.println(nr + " : " + nc);
+
 				map[nr][nc] = -2; // 구슬을 파괴함
 			}
+			pullMap();
 			
-			q = new LinkedList<>();
-			int num = checkMapRotation();
-			
-			if(num != 0) {
-				System.out.println("들어옴? -> " + num);
-				while(!q.isEmpty()) {
-					Cood m = numToMap.get(num);
-					int numQ = q.poll();
-					System.out.println(numQ);
-					
-					if(numQ == -2) continue;
-					else {
-						map[m.r][m.c] = numQ;
-						num += 1;
-					}
-				}
-				
-				for(int k=num; k<N*N; k++) {
-					Cood m = numToMap.get(k);
-					map[m.r][m.c] = -2;
+			while(true) {
+				int result = bumb();
+				if(result == 0) break;
+				else {
+					pullMap();
 				}
 			}
-			System.out.println("result: " + Arrays.deepToString(map));
 			
-			System.out.println(Arrays.deepToString(map));
-			return;
+			changeMap();
 		}
-		
+		System.out.println(1*ballOne + 2*ballTwo + 3*ballThree);
 	}
 	public static void mapRotation() {
 		int[] dr = {0, 1, 0, -1}; // 좌 하 우 상
@@ -114,7 +97,6 @@ public class Q21611 {
 				
 				numToMap.put(idx, new Cood(nr, nc));
 				idx += 1;
-				System.out.println(nr + " : " + nc);
 				if(nr == 0 && nc == 0) break;
 			}
 			if(nr == 0 && nc == 0) break;
@@ -172,7 +154,6 @@ public class Q21611 {
 				nc = nc + dc[goIdx%4];
 				
 				if(map[nr][nc] == -2 && !blankChk) {
-					System.out.println("idx : " + idx);
 					answer = idx;
 					blankChk = true;
 				}
@@ -180,12 +161,123 @@ public class Q21611 {
 				if(blankChk) q.offer(map[nr][nc]);
 				idx += 1;
 				
-				System.out.println(nr + " : " + nc);
 				if(nr == 0 && nc == 0) break;
 			}
 			if(nr == 0 && nc == 0) break;
 			goIdx += 1;
 		}
 		return answer;
+	}
+	public static int bumb() {
+		Queue<Integer> tmpQ = new LinkedList<>();
+		
+		int[] dr = {0, 1, 0, -1}; // 좌 하 우 상
+		int[] dc = {-1, 0, 1, 0};
+		
+		int goIdx = 0;
+		int nr = shark_r, nc = shark_c;
+		int idx = 1;
+		int ballNumber = map[shark_r][shark_c]; // 구슬 번호
+		int bumbCnt = 0; // 구슬이 부서진 개수
+		while(true) {
+			for(int i=0; i<goIdx/2+1; i++) {
+				nr = nr + dr[goIdx%4];
+				nc = nc + dc[goIdx%4];
+				
+				if(map[nr][nc] != ballNumber) {
+					ballNumber = map[nr][nc];
+					
+					if(tmpQ.size() >= 4) {
+						while(!tmpQ.isEmpty()) {
+							Cood t = numToMap.get(tmpQ.poll());
+							countBumbBall(map[t.r][t.c]);
+							map[t.r][t.c] = -2; // 구슬을 폭발시킴
+							bumbCnt += 1;
+						}
+					} else tmpQ = new LinkedList<>();	
+				}
+				
+				tmpQ.offer(idx);
+				idx += 1;
+				
+				if(nr == 0 && nc == 0) break;
+			}
+			if(nr == 0 && nc == 0) break;
+			goIdx += 1;
+		}
+		
+		return bumbCnt;
+	}
+	public static void pullMap() {
+		// map을 당기다 (빈 칸을 채운다.)
+		q = new LinkedList<>();
+		int num = checkMapRotation();
+		
+		if(num != 0) {
+			while(!q.isEmpty()) {
+				Cood m = numToMap.get(num);
+				int numQ = q.poll();
+				
+				if(numQ == -2) continue;
+				else {
+					map[m.r][m.c] = numQ;
+					num += 1;
+				}
+			}
+			
+			for(int k=num; k<N*N; k++) {
+				Cood m = numToMap.get(k);
+				map[m.r][m.c] = -2;
+			}
+		}
+	}
+	public static void changeMap() {
+		// 구슬이 변화하는 단계 (가장 마지막 단계)
+		Queue<Integer> tmpQ = new LinkedList<>(); // 구슬의 개수와 번호를 순서대로 저장
+		int[] dr = {0, 1, 0, -1}; // 좌 하 우 상
+		int[] dc = {-1, 0, 1, 0};
+		
+		int goIdx = 0;
+		int nr = shark_r, nc = shark_c;
+		int ballNumber = map[shark_r][shark_c];
+		int cnt = 0;
+		while(true) {
+			for(int i=0; i<goIdx/2+1; i++) {
+				nr = nr + dr[goIdx%4];
+				nc = nc + dc[goIdx%4];
+				
+				if(map[nr][nc] != ballNumber) {
+					if(ballNumber != 0) {
+						tmpQ.offer(cnt);
+						tmpQ.offer(ballNumber);
+					}
+					ballNumber = map[nr][nc];
+					cnt = 0;
+				} 
+				
+				cnt += 1;
+				if(nr == 0 && nc == 0) break;
+			}
+			if(nr == 0 && nc == 0) break;
+			goIdx += 1;
+		}
+		
+		int idx = 1;
+		while(!tmpQ.isEmpty()) {
+			if(idx >= N*N) break;
+			Cood t = numToMap.get(idx);
+			map[t.r][t.c] = tmpQ.poll();
+			idx += 1;
+		}
+		
+		for(int k=idx; k<N*N; k++) {
+			Cood m = numToMap.get(k);
+			map[m.r][m.c] = -2;
+		}
+	}
+	public static void countBumbBall(int n) {
+		if(n == 1) ballOne += 1;
+		else if(n == 2) ballTwo += 1;
+		else if(n == 3) ballThree += 1;
 	}
 }
