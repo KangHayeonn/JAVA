@@ -67,9 +67,6 @@ public class Q20056 {
 			ballMap.put(fireBallIdx, new TypeBall(r, c, m, s, d));
 			fireBallIdx += 1;
 		}
-		for(Integer ball : ballMap.keySet()) {
-			TypeBall  b = ballMap.get(ball);
-		}
 		
 		while(K-- > 0) {
 			moveAllFireBall();
@@ -183,6 +180,8 @@ public class Q20056 {
 					}
 					
 					map[i][j] = new Type(0, new ArrayList<Integer>());
+					
+					if(totalM/5 == 0) continue;
 					
 					if(!isAll) { // 1, 3, 5, 7
 						for(int idx=1; idx<=7; idx+=2) {
