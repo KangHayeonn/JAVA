@@ -14,8 +14,8 @@ public class Q23290 {
 	static int shark_r, shark_c;
 	static int[] dr = {0, -1, -1, -1, 0, 1, 1, 1};
 	static int[] dc = {-1, -1, 0, 1, 1, 1, 0, -1};
-	static int[] shark_dr = {-1, 1, 0, 0}; // 상 하 좌 우 
-	static int[] shark_dc = {0, 0, -1, 1};
+	static int[] shark_dr = {-1, 0, 1, 0}; // 상 좌 하 우
+	static int[] shark_dc = {0, -1, 0, 1};
 	static ArrayList<String> sharkMoveDict;
 	public static class Type {
 		int r, c;
@@ -98,10 +98,7 @@ public class Q23290 {
 		
 		getSharkMoveDict(arr, pickArr, 0);
 		
-		// Collections.sort(sharkMoveDict);
-		
 		Queue<Type> tmpQ;
-		int idx = 1;
 		while(S-- > 0) {
 			// 상어가 모든 물고기에게 복제 마법을 시전 (1번)
 			tmpQ = new LinkedList<>();
@@ -109,49 +106,12 @@ public class Q23290 {
 				Type t = fishMap.get(key);
 				tmpQ.offer(new Type(t.r, t.c, t.d));
 			}
-			/*
-			for(int i=0; i<4; i++) {
-				for(int j=0; j<4; j++) {
-					if(map[i][j] == null) continue;
-					System.out.println("r: " + i + ", c : " + j + " -> " + map[i][j].cnt);
-					for(Integer a: map[i][j].arr) {
-						System.out.println(a + ", ");
-					}
-					System.out.println();
-				}
-			}
-			
-			*/System.out.println("\n-------------------이동후 -------------");
 			
 			// 모든 물고기가 한칸 이동 (2번)
 			moveFish();
-			
-			for(int i=0; i<4; i++) {
-				for(int j=0; j<4; j++) {
-					if(map[i][j] == null) continue;
-					System.out.println("r: " + i + ", c : " + j + " -> " + map[i][j].cnt);
-					for(Integer a: map[i][j].arr) {
-						System.out.println(a + ", ");
-					}
-					System.out.println();
-				}
-			}
 
 			// 상어가 연속해서 3칸 이동 (3번)
 			moveShark();
-			
-			System.out.println("\n-------------------상어가 잡아먹은 후 -------------");
-			
-			for(int i=0; i<4; i++) {
-				for(int j=0; j<4; j++) {
-					if(map[i][j] == null) continue;
-					System.out.println("r: " + i + ", c : " + j + " -> " + map[i][j].cnt);
-					for(Integer a: map[i][j].arr) {
-						System.out.println(a + ", ");
-					}
-					System.out.println();
-				}
-			}
 			
 			// 두 번 전 연습에서 생긴 물고기의 냄새가 격자에서 사라짐 (4번)
 			deleteSmell();
@@ -174,42 +134,12 @@ public class Q23290 {
 				}
 				fishIdx += 1;
 			}
-			
-			System.out.println(idx + " 번째 -----------");
-			for(int i=0; i<4; i++) {
-				for(int j=0; j<4; j++) {
-					if(smellChkMap[i][j] == null) continue;
-					System.out.println("r: " + i + ", c : " + j + " -> " + smellChkMap[i][j].chk + " , cnt : " + smellChkMap[i][j].cnt);
-				}
-			}
-			System.out.println();
-			idx += 1;
-			/*
-			System.out.println("\n-------------------복제 후 -------------");
-			
-			for(int i=0; i<4; i++) {
-				for(int j=0; j<4; j++) {
-					if(map[i][j] == null) continue;
-					System.out.println("r: " + i + ", c : " + j + " -> " + map[i][j].cnt);
-					for(Integer a: map[i][j].arr) {
-						System.out.println(a + ", ");
-					}
-					System.out.println();
-				}
-			}
-			System.out.println("\n-------------------Finish -------------");*/
-			
 		}
 		
 		int sumFish = 0;
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
 				if(map[i][j] != null) {
-					/*
-					System.out.println("cnt : " + map[i][j].cnt);
-					for(Integer a: map[i][j].arr) {
-						System.out.println(a + ", ");
-					}*/
 					sumFish += map[i][j].cnt;
 				}
 			}
@@ -257,10 +187,6 @@ public class Q23290 {
 					map[nr][nc] = a; 
 				}
 				
-				/*
-				System.out.println(">>> 이동" + " , key : "+ key);
-				System.out.println("nr : " + nr + " nc : " + nc + " -> d: " + nd);
-				System.out.println("<<<< \n");*/
 				fishMap.put(key, new Type(nr, nc, nd));
 			}
 		}
@@ -298,14 +224,11 @@ public class Q23290 {
 			first = s.charAt(0) - '0';
 			second = s.charAt(1) - '0';
 			third = s.charAt(2) - '0';
-			System.out.println(first + " " + second + " " + third);
-			System.out.println("(상어 좌표) r: " + shark_r + ", c: " + shark_c);
 			
 			sum = 0;
 			
 			nrFirst = shark_r + shark_dr[first];
 			ncFirst = shark_c + shark_dc[first];
-			System.out.println("(첫번째 이동) r: " + nrFirst + ", c: " + ncFirst);
 			
 			if(nrFirst < 0 || ncFirst < 0 || nrFirst >= 4 || ncFirst >= 4) continue;
 			if(map[nrFirst][ncFirst] != null && !isVisited[nrFirst][ncFirst]) {
@@ -315,7 +238,6 @@ public class Q23290 {
 			
 			nrSecond = nrFirst + shark_dr[second];
 			ncSecond = ncFirst + shark_dc[second];
-			System.out.println("(두번째 이동) r: " + nrSecond + ", c: " + ncSecond);
 			
 			if(nrSecond < 0 || ncSecond < 0 || nrSecond >= 4 || ncSecond >= 4) continue;
 			if(map[nrSecond][ncSecond] != null && !isVisited[nrSecond][ncSecond]) {
@@ -325,7 +247,6 @@ public class Q23290 {
 			
 			nrThird = nrSecond + shark_dr[third];
 			ncThird = ncSecond + shark_dc[third];
-			System.out.println("(세번째 이동) r: " + nrThird + ", c: " + ncThird);
 			
 			if(nrThird < 0 || ncThird < 0 || nrThird >= 4 || ncThird >= 4) continue;
 			if(map[nrThird][ncThird] != null && !isVisited[nrThird][ncThird]) {
@@ -336,7 +257,6 @@ public class Q23290 {
 		}
 		
 		SharkType s = pq.poll();
-		System.out.println(s.s + " -> " + s.cnt);
 		
 		// 첫번째 이동에서 삭제
 		if(map[s.rFirst][s.cFirst] != null && map[s.rFirst][s.cFirst].cnt > 0) {
