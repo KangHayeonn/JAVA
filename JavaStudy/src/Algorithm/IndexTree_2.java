@@ -10,7 +10,10 @@ import java.util.StringTokenizer;
 public class IndexTree_2 {
 	static int[] tree;
 	public static void main(String args[]) throws IOException {
-		// 3 7 1 5 2 4 1 11
+		/*
+		 * 8
+		 * 3 7 1 5 2 4 1 11
+		 */
 		System.setIn(new FileInputStream("input"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
